@@ -1,8 +1,8 @@
 node_modules/
 dist/
-data/
+**/data/*.db
 .env
-.env.*
-*.db
-*.db-journal
+.env.local
+*.log
 .DS_Store
+Thumbs.db
