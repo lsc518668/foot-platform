@@ -1,0 +1,42 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Ant Design dark theme overrides */
+.ant-layout { background: #0f172a !important; }
+.ant-layout-sider { background: #1a1a2e !important; }
+.ant-menu-dark { background: transparent !important; }
+.ant-table {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+.ant-table-thead > tr > th {
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+}
+.ant-table-tbody > tr > td {
+  border-color: #334155 !important;
+}
+.ant-table-tbody > tr:hover > td {
+  background: #334155 !important;
+}
+.ant-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+.ant-modal-content {
+  background: #1e293b !important;
+}
+.ant-modal-header {
+  background: #1e293b !important;
+}
+.ant-modal-title { color: #e2e8f0 !important; }
+.ant-select-selector, .ant-input, .ant-picker {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}

@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface-dark text-white antialiased;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-light text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+  .btn-accent {
+    @apply bg-accent hover:bg-accent-light text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95;
+  }
+  .card {
+    @apply bg-surface rounded-xl p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-200;
+  }
+  .input-field {
+    @apply w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-surface-dark;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
+}
+
+/* Animated background for hero */
+.hero-gradient {
+  background: linear-gradient(135deg, #0f3d22 0%, #1a5632 30%, #2d8a4e 60%, #0f172a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(45, 138, 78, 0.2) 0%, transparent 50%);
+}
+
+/* Podium glow */
+.podium-gold {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), 0 0 60px rgba(255, 215, 0, 0.1);
+}
+.podium-silver {
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.3), 0 0 40px rgba(192, 192, 192, 0.1);
+}
+.podium-bronze {
+  box-shadow: 0 0 20px rgba(205, 127, 50, 0.3), 0 0 40px rgba(205, 127, 50, 0.1);
+}
+
+/* Light mode overrides */
+html.light body {
+  @apply bg-gray-50 text-gray-900;
+}
+html.light .card {
+  @apply bg-white border-gray-200 hover:border-primary/30;
+}
+html.light .input-field {
+  @apply bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-primary;
+}
+html.light header {
+  @apply bg-white/95 border-gray-200;
+}
+html.light footer {
+  @apply bg-gray-100 border-gray-200 text-gray-500;
+}
+html.light .btn-primary {
+  @apply bg-primary hover:bg-primary-light text-white;
+}
+html.light .btn-accent {
+  @apply bg-accent hover:bg-accent-light text-gray-900;
+}
+html.light nav a {
+  @apply text-gray-600 hover:text-primary;
+}
+html.light .hero-gradient {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 30%, #a8d5ba 60%, #e8f5e9 100%);
+}
+html.light .hero-gradient h1,
+html.light .hero-gradient p {
+  @apply text-gray-900;
+}
