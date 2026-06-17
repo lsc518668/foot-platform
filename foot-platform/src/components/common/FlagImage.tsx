@@ -34,18 +34,18 @@ export default function FlagImage({ code, size = 24, className = '' }: FlagImage
  */
 export function fifaToIso2(fifa: string): string {
   const map: Record<string, string> = {
-    USA: 'us', NED: 'nl', IRN: 'ir', NZL: 'nz',
-    MEX: 'mx', POR: 'pt', KOR: 'kr', CMR: 'cm',
-    CAN: 'ca', ENG: 'gb', JPN: 'jp', EGY: 'eg',
-    ARG: 'ar', GER: 'de', SEN: 'sn', UAE: 'ae',
-    BRA: 'br', CRO: 'hr', MAR: 'ma', AUS: 'au',
-    FRA: 'fr', URU: 'uy', KSA: 'sa', JAM: 'jm',
-    ESP: 'es', SUI: 'ch', COL: 'co', CHN: 'cn',
-    ITA: 'it', BEL: 'be', PER: 'pe', QAT: 'qa',
-    NOR: 'no', SRB: 'rs', NGA: 'ng', CRC: 'cr',
-    DEN: 'dk', AUT: 'at', ALG: 'dz', IRQ: 'iq',
-    ECU: 'ec', UKR: 'ua', TUN: 'tn', PAN: 'pa',
-    CHI: 'cl', SWE: 'se', GHA: 'gh', UZB: 'uz',
+    USA: 'us', MEX: 'mx', CAN: 'ca',
+    ARG: 'ar', BRA: 'br', URU: 'uy', PAR: 'py', COL: 'co', ECU: 'ec',
+    FRA: 'fr', ESP: 'es', GER: 'de', ENG: 'gb', POR: 'pt',
+    ITA: 'it', NED: 'nl', BEL: 'be', SUI: 'ch', AUT: 'at',
+    NOR: 'no', SWE: 'se', DEN: 'dk', CRO: 'hr', SRB: 'rs',
+    UKR: 'ua', SCO: 'gb-sct', TUR: 'tr', CZE: 'cz', BIH: 'ba',
+    KOR: 'kr', JPN: 'jp', AUS: 'au', IRN: 'ir', KSA: 'sa',
+    QAT: 'qa', IRQ: 'iq', JOR: 'jo', UZB: 'uz', CHN: 'cn',
+    MAR: 'ma', SEN: 'sn', ALG: 'dz', TUN: 'tn', EGY: 'eg',
+    CIV: 'ci', GHA: 'gh', CMR: 'cm', NGA: 'ng', COD: 'cd',
+    RSA: 'za', CPV: 'cv', HAI: 'ht', CUW: 'cw', PAN: 'pa',
+    NZL: 'nz', CRC: 'cr', JAM: 'jm', UAE: 'ae',
   };
   return map[fifa.toUpperCase()] || fifa.toLowerCase();
 }
