@@ -87,6 +87,9 @@ export function calculateForMatch(matchId: number): void {
     if (existing?.is_manual_override === 1) continue;
     db.prepare(m.sql).run(...m.params);
   }
+
+  // 赔率变更后立即持久化到磁盘，防止重启丢失
+  db.save();
 }
 
 export function manualOverride(matchId: number, marketType: MarketType, data: any): Odds {
@@ -101,6 +104,8 @@ export function manualOverride(matchId: number, marketType: MarketType, data: an
       VALUES (?, ?, ?, ?, ?, 1)`)
       .run(matchId, marketType, data.homeWinOdds, data.drawOdds, data.awayWinOdds);
   }
+  // 手动赔率覆盖后立即持久化
+  db.save();
   return getByMatchId(matchId, marketType);
 }
 
