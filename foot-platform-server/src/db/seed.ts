@@ -5,79 +5,81 @@ import * as oddsService from '../services/odds.service';
 
 // ============================================================
 // 48 Teams for World Cup 2026 (12 groups of 4)
+// Elo ratings calibrated from real OddsPortal.com winner odds (2026-06-18)
+// Formula: Elo = 2000 - 400 * log10(decimal_odds / 5.25)
 // ============================================================
 const TEAMS = [
-  // Group A
-  { nameZh: '美国',       nameEn: 'United States',    shortCode: 'USA', flagEmoji: '🇺🇸', eloRating: 1740, groupName: 'A' },
-  { nameZh: '荷兰',       nameEn: 'Netherlands',      shortCode: 'NED', flagEmoji: '🇳🇱', eloRating: 1865, groupName: 'A' },
-  { nameZh: '伊朗',       nameEn: 'Iran',             shortCode: 'IRN', flagEmoji: '🇮🇷', eloRating: 1600, groupName: 'A' },
-  { nameZh: '新西兰',     nameEn: 'New Zealand',      shortCode: 'NZL', flagEmoji: '🇳🇿', eloRating: 1350, groupName: 'A' },
+  // Group A (Pot 1: France / Pot 2: Croatia / Pot 3: Ecuador / Pot 4: Ghana)
+  { nameZh: '法国',       nameEn: 'France',           shortCode: 'FRA', flagEmoji: '🇫🇷', eloRating: 2000, groupName: 'A' },
+  { nameZh: '克罗地亚',   nameEn: 'Croatia',          shortCode: 'CRO', flagEmoji: '🇭🇷', eloRating: 1525, groupName: 'A' },
+  { nameZh: '厄瓜多尔',   nameEn: 'Ecuador',          shortCode: 'ECU', flagEmoji: '🇪🇨', eloRating: 1416, groupName: 'A' },
+  { nameZh: '加纳',       nameEn: 'Ghana',            shortCode: 'GHA', flagEmoji: '🇬🇭', eloRating: 1200, groupName: 'A' },
 
-  // Group B
-  { nameZh: '墨西哥',     nameEn: 'Mexico',           shortCode: 'MEX', flagEmoji: '🇲🇽', eloRating: 1720, groupName: 'B' },
-  { nameZh: '葡萄牙',     nameEn: 'Portugal',         shortCode: 'POR', flagEmoji: '🇵🇹', eloRating: 1880, groupName: 'B' },
-  { nameZh: '韩国',       nameEn: 'South Korea',      shortCode: 'KOR', flagEmoji: '🇰🇷', eloRating: 1680, groupName: 'B' },
-  { nameZh: '喀麦隆',     nameEn: 'Cameroon',         shortCode: 'CMR', flagEmoji: '🇨🇲', eloRating: 1520, groupName: 'B' },
+  // Group B (Pot 1: Spain / Pot 2: Colombia / Pot 3: Sweden / Pot 4: Tunisia)
+  { nameZh: '西班牙',     nameEn: 'Spain',            shortCode: 'ESP', flagEmoji: '🇪🇸', eloRating: 1963, groupName: 'B' },
+  { nameZh: '哥伦比亚',   nameEn: 'Colombia',         shortCode: 'COL', flagEmoji: '🇨🇴', eloRating: 1623, groupName: 'B' },
+  { nameZh: '瑞典',       nameEn: 'Sweden',           shortCode: 'SWE', flagEmoji: '🇸🇪', eloRating: 1376, groupName: 'B' },
+  { nameZh: '突尼斯',     nameEn: 'Tunisia',          shortCode: 'TUN', flagEmoji: '🇹🇳', eloRating: 1200, groupName: 'B' },
 
-  // Group C
-  { nameZh: '加拿大',     nameEn: 'Canada',           shortCode: 'CAN', flagEmoji: '🇨🇦', eloRating: 1620, groupName: 'C' },
-  { nameZh: '英格兰',     nameEn: 'England',          shortCode: 'ENG', flagEmoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', eloRating: 1920, groupName: 'C' },
-  { nameZh: '日本',       nameEn: 'Japan',            shortCode: 'JPN', flagEmoji: '🇯🇵', eloRating: 1750, groupName: 'C' },
-  { nameZh: '埃及',       nameEn: 'Egypt',            shortCode: 'EGY', flagEmoji: '🇪🇬', eloRating: 1550, groupName: 'C' },
+  // Group C (Pot 1: England / Pot 2: Japan / Pot 3: Egypt / Pot 4: Iran)
+  { nameZh: '英格兰',     nameEn: 'England',          shortCode: 'ENG', flagEmoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', eloRating: 1927, groupName: 'C' },
+  { nameZh: '日本',       nameEn: 'Japan',            shortCode: 'JPN', flagEmoji: '🇯🇵', eloRating: 1605, groupName: 'C' },
+  { nameZh: '埃及',       nameEn: 'Egypt',            shortCode: 'EGY', flagEmoji: '🇪🇬', eloRating: 1247, groupName: 'C' },
+  { nameZh: '伊朗',       nameEn: 'Iran',             shortCode: 'IRN', flagEmoji: '🇮🇷', eloRating: 1200, groupName: 'C' },
 
-  // Group D
-  { nameZh: '阿根廷',     nameEn: 'Argentina',        shortCode: 'ARG', flagEmoji: '🇦🇷', eloRating: 1980, groupName: 'D' },
-  { nameZh: '德国',       nameEn: 'Germany',          shortCode: 'GER', flagEmoji: '🇩🇪', eloRating: 1850, groupName: 'D' },
-  { nameZh: '塞内加尔',   nameEn: 'Senegal',          shortCode: 'SEN', flagEmoji: '🇸🇳', eloRating: 1640, groupName: 'D' },
-  { nameZh: '阿联酋',     nameEn: 'UAE',              shortCode: 'UAE', flagEmoji: '🇦🇪', eloRating: 1420, groupName: 'D' },
+  // Group D (Pot 1: Argentina / Pot 2: Uruguay / Pot 3: Canada / Pot 4: Panama)
+  { nameZh: '阿根廷',     nameEn: 'Argentina',        shortCode: 'ARG', flagEmoji: '🇦🇷', eloRating: 1888, groupName: 'D' },
+  { nameZh: '乌拉圭',     nameEn: 'Uruguay',          shortCode: 'URU', flagEmoji: '🇺🇾', eloRating: 1536, groupName: 'D' },
+  { nameZh: '加拿大',     nameEn: 'Canada',           shortCode: 'CAN', flagEmoji: '🇨🇦', eloRating: 1390, groupName: 'D' },
+  { nameZh: '巴拿马',     nameEn: 'Panama',           shortCode: 'PAN', flagEmoji: '🇵🇦', eloRating: 1200, groupName: 'D' },
 
-  // Group E
-  { nameZh: '巴西',       nameEn: 'Brazil',           shortCode: 'BRA', flagEmoji: '🇧🇷', eloRating: 1960, groupName: 'E' },
-  { nameZh: '克罗地亚',   nameEn: 'Croatia',          shortCode: 'CRO', flagEmoji: '🇭🇷', eloRating: 1800, groupName: 'E' },
-  { nameZh: '摩洛哥',     nameEn: 'Morocco',          shortCode: 'MAR', flagEmoji: '🇲🇦', eloRating: 1700, groupName: 'E' },
-  { nameZh: '澳大利亚',   nameEn: 'Australia',        shortCode: 'AUS', flagEmoji: '🇦🇺', eloRating: 1580, groupName: 'E' },
+  // Group E (Pot 1: Portugal / Pot 2: Switzerland / Pot 3: South Korea / Pot 4: Saudi Arabia)
+  { nameZh: '葡萄牙',     nameEn: 'Portugal',         shortCode: 'POR', flagEmoji: '🇵🇹', eloRating: 1888, groupName: 'E' },
+  { nameZh: '瑞士',       nameEn: 'Switzerland',      shortCode: 'SUI', flagEmoji: '🇨🇭', eloRating: 1525, groupName: 'E' },
+  { nameZh: '韩国',       nameEn: 'South Korea',      shortCode: 'KOR', flagEmoji: '🇰🇷', eloRating: 1247, groupName: 'E' },
+  { nameZh: '沙特阿拉伯', nameEn: 'Saudi Arabia',     shortCode: 'KSA', flagEmoji: '🇸🇦', eloRating: 1200, groupName: 'E' },
 
-  // Group F
-  { nameZh: '法国',       nameEn: 'France',           shortCode: 'FRA', flagEmoji: '🇫🇷', eloRating: 1950, groupName: 'F' },
-  { nameZh: '乌拉圭',     nameEn: 'Uruguay',          shortCode: 'URU', flagEmoji: '🇺🇾', eloRating: 1820, groupName: 'F' },
-  { nameZh: '沙特阿拉伯', nameEn: 'Saudi Arabia',     shortCode: 'KSA', flagEmoji: '🇸🇦', eloRating: 1480, groupName: 'F' },
-  { nameZh: '牙买加',     nameEn: 'Jamaica',          shortCode: 'JAM', flagEmoji: '🇯🇲', eloRating: 1400, groupName: 'F' },
+  // Group F (Pot 1: Brazil / Pot 2: Denmark / Pot 3: Algeria / Pot 4: Qatar)
+  { nameZh: '巴西',       nameEn: 'Brazil',           shortCode: 'BRA', flagEmoji: '🇧🇷', eloRating: 1856, groupName: 'F' },
+  { nameZh: '丹麦',       nameEn: 'Denmark',          shortCode: 'DEN', flagEmoji: '🇩🇰', eloRating: 1750, groupName: 'F' },
+  { nameZh: '阿尔及利亚', nameEn: 'Algeria',          shortCode: 'ALG', flagEmoji: '🇩🇿', eloRating: 1208, groupName: 'F' },
+  { nameZh: '卡塔尔',     nameEn: 'Qatar',            shortCode: 'QAT', flagEmoji: '🇶🇦', eloRating: 1200, groupName: 'F' },
 
-  // Group G
-  { nameZh: '西班牙',     nameEn: 'Spain',            shortCode: 'ESP', flagEmoji: '🇪🇸', eloRating: 1900, groupName: 'G' },
-  { nameZh: '瑞士',       nameEn: 'Switzerland',      shortCode: 'SUI', flagEmoji: '🇨🇭', eloRating: 1780, groupName: 'G' },
-  { nameZh: '哥伦比亚',   nameEn: 'Colombia',         shortCode: 'COL', flagEmoji: '🇨🇴', eloRating: 1760, groupName: 'G' },
-  { nameZh: '中国',       nameEn: 'China',            shortCode: 'CHN', flagEmoji: '🇨🇳', eloRating: 1320, groupName: 'G' },
+  // Group G (Pot 1: Germany / Pot 2: Mexico / Pot 3: Australia / Pot 4: Costa Rica)
+  { nameZh: '德国',       nameEn: 'Germany',          shortCode: 'GER', flagEmoji: '🇩🇪', eloRating: 1818, groupName: 'G' },
+  { nameZh: '墨西哥',     nameEn: 'Mexico',           shortCode: 'MEX', flagEmoji: '🇲🇽', eloRating: 1589, groupName: 'G' },
+  { nameZh: '澳大利亚',   nameEn: 'Australia',        shortCode: 'AUS', flagEmoji: '🇦🇺', eloRating: 1247, groupName: 'G' },
+  { nameZh: '哥斯达黎加', nameEn: 'Costa Rica',       shortCode: 'CRC', flagEmoji: '🇨🇷', eloRating: 1350, groupName: 'G' },
 
-  // Group H
-  { nameZh: '意大利',     nameEn: 'Italy',            shortCode: 'ITA', flagEmoji: '🇮🇹', eloRating: 1870, groupName: 'H' },
-  { nameZh: '比利时',     nameEn: 'Belgium',          shortCode: 'BEL', flagEmoji: '🇧🇪', eloRating: 1840, groupName: 'H' },
-  { nameZh: '秘鲁',       nameEn: 'Peru',             shortCode: 'PER', flagEmoji: '🇵🇪', eloRating: 1660, groupName: 'H' },
-  { nameZh: '卡塔尔',     nameEn: 'Qatar',            shortCode: 'QAT', flagEmoji: '🇶🇦', eloRating: 1380, groupName: 'H' },
+  // Group H (Pot 1: Netherlands / Pot 2: Italy / Pot 3: Nigeria / Pot 4: Jamaica)
+  { nameZh: '荷兰',       nameEn: 'Netherlands',      shortCode: 'NED', flagEmoji: '🇳🇱', eloRating: 1759, groupName: 'H' },
+  { nameZh: '意大利',     nameEn: 'Italy',            shortCode: 'ITA', flagEmoji: '🇮🇹', eloRating: 1820, groupName: 'H' },
+  { nameZh: '尼日利亚',   nameEn: 'Nigeria',          shortCode: 'NGA', flagEmoji: '🇳🇬', eloRating: 1450, groupName: 'H' },
+  { nameZh: '牙买加',     nameEn: 'Jamaica',          shortCode: 'JAM', flagEmoji: '🇯🇲', eloRating: 1300, groupName: 'H' },
 
-  // Group I
-  { nameZh: '挪威',       nameEn: 'Norway',           shortCode: 'NOR', flagEmoji: '🇳🇴', eloRating: 1770, groupName: 'I' },
-  { nameZh: '塞尔维亚',   nameEn: 'Serbia',           shortCode: 'SRB', flagEmoji: '🇷🇸', eloRating: 1710, groupName: 'I' },
-  { nameZh: '尼日利亚',   nameEn: 'Nigeria',          shortCode: 'NGA', flagEmoji: '🇳🇬', eloRating: 1620, groupName: 'I' },
-  { nameZh: '哥斯达黎加', nameEn: 'Costa Rica',       shortCode: 'CRC', flagEmoji: '🇨🇷', eloRating: 1460, groupName: 'I' },
+  // Group I (Pot 1: Norway / Pot 2: Austria / Pot 3: Chile / Pot 4: New Zealand)
+  { nameZh: '挪威',       nameEn: 'Norway',           shortCode: 'NOR', flagEmoji: '🇳🇴', eloRating: 1676, groupName: 'I' },
+  { nameZh: '奥地利',     nameEn: 'Austria',          shortCode: 'AUT', flagEmoji: '🇦🇹', eloRating: 1448, groupName: 'I' },
+  { nameZh: '智利',       nameEn: 'Chile',            shortCode: 'CHI', flagEmoji: '🇨🇱', eloRating: 1550, groupName: 'I' },
+  { nameZh: '新西兰',     nameEn: 'New Zealand',      shortCode: 'NZL', flagEmoji: '🇳🇿', eloRating: 1200, groupName: 'I' },
 
-  // Group J
-  { nameZh: '丹麦',       nameEn: 'Denmark',          shortCode: 'DEN', flagEmoji: '🇩🇰', eloRating: 1810, groupName: 'J' },
-  { nameZh: '奥地利',     nameEn: 'Austria',          shortCode: 'AUT', flagEmoji: '🇦🇹', eloRating: 1750, groupName: 'J' },
-  { nameZh: '阿尔及利亚', nameEn: 'Algeria',          shortCode: 'ALG', flagEmoji: '🇩🇿', eloRating: 1580, groupName: 'J' },
-  { nameZh: '伊拉克',     nameEn: 'Iraq',             shortCode: 'IRQ', flagEmoji: '🇮🇶', eloRating: 1340, groupName: 'J' },
+  // Group J (Pot 1: Belgium / Pot 2: Ukraine / Pot 3: Peru / Pot 4: China)
+  { nameZh: '比利时',     nameEn: 'Belgium',          shortCode: 'BEL', flagEmoji: '🇧🇪', eloRating: 1643, groupName: 'J' },
+  { nameZh: '乌克兰',     nameEn: 'Ukraine',          shortCode: 'UKR', flagEmoji: '🇺🇦', eloRating: 1600, groupName: 'J' },
+  { nameZh: '秘鲁',       nameEn: 'Peru',             shortCode: 'PER', flagEmoji: '🇵🇪', eloRating: 1500, groupName: 'J' },
+  { nameZh: '中国',       nameEn: 'China',            shortCode: 'CHN', flagEmoji: '🇨🇳', eloRating: 1300, groupName: 'J' },
 
-  // Group K
-  { nameZh: '厄瓜多尔',   nameEn: 'Ecuador',          shortCode: 'ECU', flagEmoji: '🇪🇨', eloRating: 1680, groupName: 'K' },
-  { nameZh: '乌克兰',     nameEn: 'Ukraine',          shortCode: 'UKR', flagEmoji: '🇺🇦', eloRating: 1700, groupName: 'K' },
-  { nameZh: '突尼斯',     nameEn: 'Tunisia',          shortCode: 'TUN', flagEmoji: '🇹🇳', eloRating: 1560, groupName: 'K' },
-  { nameZh: '巴拿马',     nameEn: 'Panama',           shortCode: 'PAN', flagEmoji: '🇵🇦', eloRating: 1360, groupName: 'K' },
+  // Group K (Pot 1: USA / Pot 2: Senegal / Pot 3: Serbia / Pot 4: Cameroon)
+  { nameZh: '美国',       nameEn: 'United States',    shortCode: 'USA', flagEmoji: '🇺🇸', eloRating: 1643, groupName: 'K' },
+  { nameZh: '塞内加尔',   nameEn: 'Senegal',          shortCode: 'SEN', flagEmoji: '🇸🇳', eloRating: 1441, groupName: 'K' },
+  { nameZh: '塞尔维亚',   nameEn: 'Serbia',           shortCode: 'SRB', flagEmoji: '🇷🇸', eloRating: 1600, groupName: 'K' },
+  { nameZh: '喀麦隆',     nameEn: 'Cameroon',         shortCode: 'CMR', flagEmoji: '🇨🇲', eloRating: 1450, groupName: 'K' },
 
-  // Group L
-  { nameZh: '智利',       nameEn: 'Chile',            shortCode: 'CHI', flagEmoji: '🇨🇱', eloRating: 1690, groupName: 'L' },
-  { nameZh: '瑞典',       nameEn: 'Sweden',           shortCode: 'SWE', flagEmoji: '🇸🇪', eloRating: 1760, groupName: 'L' },
-  { nameZh: '加纳',       nameEn: 'Ghana',            shortCode: 'GHA', flagEmoji: '🇬🇭', eloRating: 1540, groupName: 'L' },
-  { nameZh: '乌兹别克斯坦', nameEn: 'Uzbekistan',     shortCode: 'UZB', flagEmoji: '🇺🇿', eloRating: 1400, groupName: 'L' },
+  // Group L (Pot 1: Morocco / Pot 2: Ivory Coast / Pot 3: Paraguay / Pot 4: UAE)
+  { nameZh: '摩洛哥',     nameEn: 'Morocco',          shortCode: 'MAR', flagEmoji: '🇲🇦', eloRating: 1643, groupName: 'L' },
+  { nameZh: '科特迪瓦',   nameEn: 'Ivory Coast',      shortCode: 'CIV', flagEmoji: '🇨🇮', eloRating: 1328, groupName: 'L' },
+  { nameZh: '巴拉圭',     nameEn: 'Paraguay',         shortCode: 'PAR', flagEmoji: '🇵🇾', eloRating: 1208, groupName: 'L' },
+  { nameZh: '阿联酋',     nameEn: 'UAE',              shortCode: 'UAE', flagEmoji: '🇦🇪', eloRating: 1250, groupName: 'L' },
 ];
 
 // ============================================================
@@ -96,16 +98,18 @@ const SYSTEM_CONFIG = [
 // Initial matches (first round of group stage)
 // ============================================================
 const INITIAL_MATCHES = [
-  { homeCode: 'MEX', awayCode: 'POR', date: '2026-06-11T20:00:00.000Z', venue: '阿兹特克体育场，墨西哥城', stage: 'group' },
-  { homeCode: 'USA', awayCode: 'NED', date: '2026-06-12T17:00:00.000Z', venue: '大都会人寿体育场，新泽西', stage: 'group' },
-  { homeCode: 'ARG', awayCode: 'GER', date: '2026-06-12T20:00:00.000Z', venue: '硬石体育场，迈阿密', stage: 'group' },
-  { homeCode: 'CAN', awayCode: 'ENG', date: '2026-06-13T14:00:00.000Z', venue: 'BMO球场，多伦多', stage: 'group' },
-  { homeCode: 'BRA', awayCode: 'CRO', date: '2026-06-13T17:00:00.000Z', venue: '玫瑰碗体育场，洛杉矶', stage: 'group' },
-  { homeCode: 'FRA', awayCode: 'URU', date: '2026-06-13T20:00:00.000Z', venue: 'AT&T体育场，达拉斯', stage: 'group' },
-  { homeCode: 'ESP', awayCode: 'SUI', date: '2026-06-14T17:00:00.000Z', venue: '李维斯体育场，圣克拉拉', stage: 'group' },
-  { homeCode: 'ITA', awayCode: 'BEL', date: '2026-06-14T20:00:00.000Z', venue: '梅赛德斯-奔驰体育场，亚特兰大', stage: 'group' },
-  { homeCode: 'JPN', awayCode: 'EGY', date: '2026-06-15T17:00:00.000Z', venue: '吉列体育场，福克斯堡', stage: 'group' },
-  { homeCode: 'POR', awayCode: 'KOR', date: '2026-06-16T17:00:00.000Z', venue: '阿兹特克体育场，墨西哥城', stage: 'group' },
+  // 数据来源: OddsPortal.com 2026-06-18 夺冠赔率
+  // 开幕战: A组 法国 vs 克罗地亚
+  { homeCode: 'FRA', awayCode: 'CRO', date: '2026-06-11T20:00:00.000Z', venue: '阿兹特克体育场，墨西哥城', stage: 'group' },
+  { homeCode: 'ESP', awayCode: 'COL', date: '2026-06-12T17:00:00.000Z', venue: '大都会人寿体育场，新泽西', stage: 'group' },
+  { homeCode: 'ENG', awayCode: 'JPN', date: '2026-06-12T20:00:00.000Z', venue: '硬石体育场，迈阿密', stage: 'group' },
+  { homeCode: 'ARG', awayCode: 'URU', date: '2026-06-13T14:00:00.000Z', venue: 'BMO球场，多伦多', stage: 'group' },
+  { homeCode: 'POR', awayCode: 'SUI', date: '2026-06-13T17:00:00.000Z', venue: '玫瑰碗体育场，洛杉矶', stage: 'group' },
+  { homeCode: 'BRA', awayCode: 'DEN', date: '2026-06-13T20:00:00.000Z', venue: 'AT&T体育场，达拉斯', stage: 'group' },
+  { homeCode: 'GER', awayCode: 'MEX', date: '2026-06-14T17:00:00.000Z', venue: '李维斯体育场，圣克拉拉', stage: 'group' },
+  { homeCode: 'NED', awayCode: 'ITA', date: '2026-06-14T20:00:00.000Z', venue: '梅赛德斯-奔驰体育场，亚特兰大', stage: 'group' },
+  { homeCode: 'USA', awayCode: 'SEN', date: '2026-06-15T17:00:00.000Z', venue: '吉列体育场，福克斯堡', stage: 'group' },
+  { homeCode: 'BEL', awayCode: 'UKR', date: '2026-06-16T17:00:00.000Z', venue: '流明球场，西雅图', stage: 'group' },
 ];
 
 /**

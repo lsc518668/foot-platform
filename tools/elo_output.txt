@@ -1,0 +1,108 @@
+Overround (sum of raw probs): 1.1190 (111.9%)
+
+=== Normalized Probabilities & Elo Ratings ===
+Rank  Team             Am Odds    Decimal  P(raw)   P(norm)  Elo   
+---------------------------------------------------------------------------
+1     法国       France       +425      5.25     0.1905   0.1702   2000  
+2     西班牙      Spain        +550      6.50     0.1538   0.1375   2249  
+3     英格兰      England      +700      8.00     0.1250   0.1117   2112  
+4     阿根廷      Argentina    +900      10.00    0.1000   0.0894   2017  
+5     葡萄牙      Portugal     +900      10.00    0.1000   0.0894   2017  
+6     巴西       Brazil       +1100     12.00    0.0833   0.0745   1956  
+7     德国       Germany      +1400     15.00    0.0667   0.0596   1892  
+8     荷兰       Netherlands  +2000     21.00    0.0476   0.0426   1809  
+9     挪威       Norway       +3300     34.00    0.0294   0.0263   1705  
+10    比利时      Belgium      +4000     41.00    0.0244   0.0218   1667  
+11    美国       USA          +4000     41.00    0.0244   0.0218   1667  
+12    摩洛哥      Morocco      +4000     41.00    0.0244   0.0218   1667  
+13    哥伦比亚     Colombia     +4500     46.00    0.0217   0.0194   1644  
+14    日本       Japan        +5000     51.00    0.0196   0.0175   1624  
+15    墨西哥      Mexico       +5500     56.00    0.0179   0.0160   1606  
+16    乌拉圭      Uruguay      +7500     76.00    0.0132   0.0118   1548  
+17    克罗地亚     Croatia      +8000     81.00    0.0123   0.0110   1536  
+18    瑞士       Switzerland  +8000     81.00    0.0123   0.0110   1536  
+19    奥地利      Austria      +12500    126.00   0.0079   0.0071   1455  
+20    塞内加尔     Senegal      +13000    131.00   0.0076   0.0068   1448  
+21    厄瓜多尔     Ecuador      +15000    151.00   0.0066   0.0059   1423  
+22    加拿大      Canada       +17500    176.00   0.0057   0.0051   1395  
+23    瑞典       Sweden       +19000    191.00   0.0052   0.0047   1380  
+24    科特迪瓦     Ivory Coast  +25000    251.00   0.0040   0.0036   1332  
+25    埃及       Egypt        +40000    401.00   0.0025   0.0022   1249  
+26    韩国       South Korea  +40000    401.00   0.0025   0.0022   1249  
+27    澳大利亚     Australia    +40000    401.00   0.0025   0.0022   1249  
+28    阿尔及利亚    Algeria      +50000    501.00   0.0020   0.0018   1210  
+29    巴拉圭      Paraguay     +50000    501.00   0.0020   0.0018   1210  
+30    加纳       Ghana        +70000    701.00   0.0014   0.0013   1200  
+31    突尼斯      Tunisia      +250000   2501.00  0.0004   0.0004   1200  
+32    伊朗       Iran         +250000   2501.00  0.0004   0.0004   1200  
+33    巴拿马      Panama       +250000   2501.00  0.0004   0.0004   1200  
+34    沙特阿拉伯    Saudi Arabia +250000   2501.00  0.0004   0.0004   1200  
+35    卡塔尔      Qatar        +250000   2501.00  0.0004   0.0004   1200  
+36    新西兰      New Zealand  +250000   2501.00  0.0004   0.0004   1200  
+
+=== Final 48 Teams (sorted by Elo) ===
+Rank  Chinese    English          Flag Elo   
+-------------------------------------------------------
+
+
+// === Copy this to seed.ts ===
+
+const TEAMS = [
+  { nameZh: '西班牙', nameEn: 'Spain', shortCode: 'SPA', flagEmoji: '🇪🇸', eloRating: 2249, groupName: 'A' },
+  { nameZh: '英格兰', nameEn: 'England', shortCode: 'ENG', flagEmoji: '🏴', eloRating: 2112, groupName: 'A' },
+  { nameZh: '阿根廷', nameEn: 'Argentina', shortCode: 'ARG', flagEmoji: '🇦🇷', eloRating: 2017, groupName: 'A' },
+  { nameZh: '葡萄牙', nameEn: 'Portugal', shortCode: 'POR', flagEmoji: '🇵🇹', eloRating: 2017, groupName: 'A' },
+  { nameZh: '法国', nameEn: 'France', shortCode: 'FRA', flagEmoji: '🇫🇷', eloRating: 2000, groupName: 'A' },
+  { nameZh: '巴西', nameEn: 'Brazil', shortCode: 'BRA', flagEmoji: '🇧🇷', eloRating: 1956, groupName: 'A' },
+  { nameZh: '德国', nameEn: 'Germany', shortCode: 'GER', flagEmoji: '🇩🇪', eloRating: 1892, groupName: 'A' },
+  { nameZh: '荷兰', nameEn: 'Netherlands', shortCode: 'NET', flagEmoji: '🇳🇱', eloRating: 1809, groupName: 'B' },
+  { nameZh: '挪威', nameEn: 'Norway', shortCode: 'NOR', flagEmoji: '🇳🇴', eloRating: 1705, groupName: 'B' },
+  { nameZh: '比利时', nameEn: 'Belgium', shortCode: 'BEL', flagEmoji: '🇧🇪', eloRating: 1667, groupName: 'B' },
+  { nameZh: '美国', nameEn: 'USA', shortCode: 'USA', flagEmoji: '🇺🇸', eloRating: 1667, groupName: 'B' },
+  { nameZh: '摩洛哥', nameEn: 'Morocco', shortCode: 'MOR', flagEmoji: '🇲🇦', eloRating: 1667, groupName: 'B' },
+  { nameZh: '哥伦比亚', nameEn: 'Colombia', shortCode: 'COL', flagEmoji: '🇨🇴', eloRating: 1644, groupName: 'B' },
+  { nameZh: '日本', nameEn: 'Japan', shortCode: 'JAP', flagEmoji: '🇯🇵', eloRating: 1624, groupName: 'B' },
+  { nameZh: '墨西哥', nameEn: 'Mexico', shortCode: 'MEX', flagEmoji: '🇲🇽', eloRating: 1606, groupName: 'C' },
+  { nameZh: '乌拉圭', nameEn: 'Uruguay', shortCode: 'URU', flagEmoji: '🇺🇾', eloRating: 1548, groupName: 'C' },
+  { nameZh: '克罗地亚', nameEn: 'Croatia', shortCode: 'CRO', flagEmoji: '🇭🇷', eloRating: 1536, groupName: 'C' },
+  { nameZh: '瑞士', nameEn: 'Switzerland', shortCode: 'SWI', flagEmoji: '🇨🇭', eloRating: 1536, groupName: 'C' },
+  { nameZh: '奥地利', nameEn: 'Austria', shortCode: 'AUS', flagEmoji: '🇦🇹', eloRating: 1455, groupName: 'C' },
+  { nameZh: '塞内加尔', nameEn: 'Senegal', shortCode: 'SEN', flagEmoji: '🇸🇳', eloRating: 1448, groupName: 'C' },
+  { nameZh: '厄瓜多尔', nameEn: 'Ecuador', shortCode: 'ECU', flagEmoji: '🇪🇨', eloRating: 1423, groupName: 'C' },
+  { nameZh: '加拿大', nameEn: 'Canada', shortCode: 'CAN', flagEmoji: '🇨🇦', eloRating: 1395, groupName: 'D' },
+  { nameZh: '瑞典', nameEn: 'Sweden', shortCode: 'SWE', flagEmoji: '🇸🇪', eloRating: 1380, groupName: 'D' },
+  { nameZh: '科特迪瓦', nameEn: 'Ivory Coast', shortCode: 'IVO', flagEmoji: '🇨🇮', eloRating: 1332, groupName: 'D' },
+  { nameZh: '意大利', nameEn: 'Italy', shortCode: 'ITA', flagEmoji: '🇮🇹', eloRating: 1300, groupName: 'D' },
+  { nameZh: '丹麦', nameEn: 'Denmark', shortCode: 'DEN', flagEmoji: '🇩🇰', eloRating: 1300, groupName: 'D' },
+  { nameZh: '塞尔维亚', nameEn: 'Serbia', shortCode: 'SER', flagEmoji: '🇷🇸', eloRating: 1300, groupName: 'D' },
+  { nameZh: '乌克兰', nameEn: 'Ukraine', shortCode: 'UKR', flagEmoji: '🇺🇦', eloRating: 1300, groupName: 'D' },
+  { nameZh: '秘鲁', nameEn: 'Peru', shortCode: 'PER', flagEmoji: '🇵🇪', eloRating: 1300, groupName: 'E' },
+  { nameZh: '智利', nameEn: 'Chile', shortCode: 'CHI', flagEmoji: '🇨🇱', eloRating: 1300, groupName: 'E' },
+  { nameZh: '尼日利亚', nameEn: 'Nigeria', shortCode: 'NIG', flagEmoji: '🇳🇬', eloRating: 1300, groupName: 'E' },
+  { nameZh: '喀麦隆', nameEn: 'Cameroon', shortCode: 'CMR', flagEmoji: '🇨🇲', eloRating: 1300, groupName: 'E' },
+  { nameZh: '哥斯达黎加', nameEn: 'Costa Rica', shortCode: 'CRC', flagEmoji: '🇨🇷', eloRating: 1300, groupName: 'E' },
+  { nameZh: '牙买加', nameEn: 'Jamaica', shortCode: 'JAM', flagEmoji: '🇯🇲', eloRating: 1300, groupName: 'E' },
+  { nameZh: '阿联酋', nameEn: 'UAE', shortCode: 'UAE', flagEmoji: '🇦🇪', eloRating: 1300, groupName: 'E' },
+  { nameZh: '中国', nameEn: 'China', shortCode: 'CHI', flagEmoji: '🇨🇳', eloRating: 1300, groupName: 'F' },
+  { nameZh: '埃及', nameEn: 'Egypt', shortCode: 'EGY', flagEmoji: '🇪🇬', eloRating: 1249, groupName: 'F' },
+  { nameZh: '韩国', nameEn: 'South Korea', shortCode: 'KOR', flagEmoji: '🇰🇷', eloRating: 1249, groupName: 'F' },
+  { nameZh: '澳大利亚', nameEn: 'Australia', shortCode: 'AUS', flagEmoji: '🇦🇺', eloRating: 1249, groupName: 'F' },
+  { nameZh: '阿尔及利亚', nameEn: 'Algeria', shortCode: 'ALG', flagEmoji: '🇩🇿', eloRating: 1210, groupName: 'F' },
+  { nameZh: '巴拉圭', nameEn: 'Paraguay', shortCode: 'PAR', flagEmoji: '🇵🇾', eloRating: 1210, groupName: 'F' },
+  { nameZh: '加纳', nameEn: 'Ghana', shortCode: 'GHA', flagEmoji: '🇬🇭', eloRating: 1200, groupName: 'F' },
+  { nameZh: '突尼斯', nameEn: 'Tunisia', shortCode: 'TUN', flagEmoji: '🇹🇳', eloRating: 1200, groupName: 'G' },
+  { nameZh: '伊朗', nameEn: 'Iran', shortCode: 'IRA', flagEmoji: '🇮🇷', eloRating: 1200, groupName: 'G' },
+  { nameZh: '巴拿马', nameEn: 'Panama', shortCode: 'PAN', flagEmoji: '🇵🇦', eloRating: 1200, groupName: 'G' },
+  { nameZh: '沙特阿拉伯', nameEn: 'Saudi Arabia', shortCode: 'KSA', flagEmoji: '🇸🇦', eloRating: 1200, groupName: 'G' },
+  { nameZh: '卡塔尔', nameEn: 'Qatar', shortCode: 'QAT', flagEmoji: '🇶🇦', eloRating: 1200, groupName: 'G' },
+  { nameZh: '新西兰', nameEn: 'New Zealand', shortCode: 'NZL', flagEmoji: '🇳🇿', eloRating: 1200, groupName: 'G' },
+];
+
+
+// === Initial matches (12 matches for opening round) ===
+  { homeCode: 'SPA', awayCode: 'ENG', date: '2026-06-11T17:00:00.000Z', venue: '阿兹特克体育场，墨西哥城', stage: 'group' },
+  { homeCode: 'ARG', awayCode: 'POR', date: '2026-06-12T20:00:00.000Z', venue: '大都会人寿体育场，新泽西', stage: 'group' },
+  { homeCode: 'FRA', awayCode: 'BRA', date: '2026-06-13T17:00:00.000Z', venue: '硬石体育场，迈阿密', stage: 'group' },
+  { homeCode: 'GER', awayCode: 'NET', date: '2026-06-14T20:00:00.000Z', venue: 'BMO球场，多伦多', stage: 'group' },
+  { homeCode: 'NOR', awayCode: 'BEL', date: '2026-06-15T17:00:00.000Z', venue: '玫瑰碗体育场，洛杉矶', stage: 'group' },
+  { homeCode: 'USA', awayCode: 'MOR', date: '2026-06-16T20:00:00.000Z', venue: 'AT&T体育场，达拉斯', stage: 'group' },
